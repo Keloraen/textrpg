@@ -36,12 +36,12 @@ public class Hero extends GameCharacter { // Класс "герой" насле�
         posY = _y;
     }
     
-    public void moveHero(int _vx, int _vy)
+    public void moveHero(int vx, int vy)
     {
         lastPosX = posX;
         lastPosY = posY;
-        posX += _vx;
-        posY += _vy;
+        posX += vx;
+        posY += vy;
     }
     
     public void expGain() {
@@ -53,32 +53,38 @@ public class Hero extends GameCharacter { // Класс "герой" насле�
         int inpInt = 0;
         switch (_charClass) {
             case Gor:
-                inpInt = getAction(1, 3, "За голову гора вы возьмёте: 1. Две ед. воли 2. Две монеты 3. Одну ед. воли и одну монету");
-                if (inpInt == 1){will = will + 2;}
+                inpInt = getAction(1, 3, "За победу над гором вы возьмёте: 1. Две ед. воли 2. Две монеты 3. Одну ед. воли и одну монету");
+                if (inpInt == 1){will = addWill(will,2);}
                 if (inpInt == 2){myInv.addSomeCoins(2);}
-                if (inpInt == 3){will = will + 1; myInv.addSomeCoins(1);}
+                if (inpInt == 3){will = addWill(will,1); myInv.addSomeCoins(1);}
                 break;
             case Skraal:
-                inpInt = getAction(1, 3, "За голову скраля вы возьмёте: 1. Четыре ед. воли 2. Четыре монеты 3. Две ед. воли и две монеты");
-                if (inpInt == 1){will = will + 4;}
+                inpInt = getAction(1, 3, "За победу над скралем вы возьмёте: 1. Четыре ед. воли 2. Четыре монеты 3. Две ед. воли и две монеты");
+                if (inpInt == 1){will = addWill(will,4);}
                 if (inpInt == 2){ myInv.addSomeCoins(4);}
-                if (inpInt == 3){will = will + 2; myInv.addSomeCoins(2);}
+                if (inpInt == 3){will = addWill(will,2); myInv.addSomeCoins(2);}
                 break;
             case Wardrack:
-                inpInt = getAction(1, 3, "За голову вардрака вы возьмёте: 1. Шесть ед. воли 2. Шесть монет 3. Три ед. воли и три монеты");
-                if (inpInt == 1){will = will + 6;}
+                inpInt = getAction(1, 3, "За победу над вардраком вы возьмёте: 1. Шесть ед. воли 2. Шесть монет 3. Три ед. воли и три монеты");
+                if (inpInt == 1){will = addWill(will,6);}
                 if (inpInt == 2){ myInv.addSomeCoins(6);}
-                if (inpInt == 3){will = will + 3; myInv.addSomeCoins(3);}
+                if (inpInt == 3){will = addWill(will,3); myInv.addSomeCoins(3);}
                 break;
             case Troll:
-                inpInt = getAction(1, 3, "За голову тролля вы возьмёте: 1. Шесть ед. воли 2. Шесть монет 3. Три ед. воли и три монеты");
-                if (inpInt == 1){will = will + 6;}
+                inpInt = getAction(1, 3, "За победу над троллем вы возьмёте: 1. Шесть ед. воли 2. Шесть монет 3. Три ед. воли и три монеты");
+                if (inpInt == 1){will = addWill(will,6);}
                 if (inpInt == 2){ myInv.addSomeCoins(6);}
-                if (inpInt == 3){will = will + 3; myInv.addSomeCoins(3);}
+                if (inpInt == 3){will = addWill(will,3); myInv.addSomeCoins(3);}
                 break;
             default:
                 break;
         }
+    }
+
+    private int addWill(int will, int add){
+        if (will+add > 20){
+            return 20;
+        } else return will + add;
     }
 
     public void defeated() {

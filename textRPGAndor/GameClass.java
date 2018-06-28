@@ -173,6 +173,7 @@ public final class GameClass {
         int monsterDamage = 0;
         currentMonster = m;
         mainHero = h;
+        boolean flag = true;
         do {
             // зануляем переменные
             heroDamage = 0;
@@ -208,12 +209,7 @@ public final class GameClass {
                     {
                         System.out.println("Герой " + mainHero.getName() + " проигрывает бой. Сила -1, воля = 3.");
                         mainHero.defeated();
-                        try {
-                            currentMonster = (Monster) monsterPattern[Utils.rand.nextInt(4)].clone(); // Создаем нового монстра случайного типа, копируя из шаблона
-                        } catch (CloneNotSupportedException ex) {
-                            Logger.getLogger(GameClass.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        System.out.println("На поле боя выходит " + currentMonster.getName()); // Выводим сообщение о выходе нового врага на поле боя
+                        flag = false;
                     }
 
                     if (!currentMonster.isAlive()) // Делаем проверку жив ли монстр после удара героя
@@ -262,12 +258,13 @@ public final class GameClass {
                     // В зависимости от того, кто остался в живых - выводим итоговое сообщение о результате игры
                     if (currentMonster.isAlive() && mainHero.isAlive()) {
                         System.out.println(mainHero.getName() + " трусливо сбегает с поля боя");
+                        flag = false;
                         break; // Выход из боя
                     }
                 }
             }
             System.out.println("======================================================================");
-        } while (true);
+        } while (flag);
     }
 
     public void selectHero() {

@@ -18,10 +18,15 @@ public class GameMap {
                 if ( i<3 && j<3) continue;
                 float rnd = (float) Math.random();
                 if (rnd >=0.7){
-                    obstMap[j][i] = 'X';
+                    obstMap[j][i] = 'T';
+                }
+                if (rnd >=0.85){
+                    obstMap[j][i] = 'M';
                 }
             }
         }
+
+        //населить карту монстрами
 
     }
     
@@ -30,22 +35,29 @@ public class GameMap {
         return obstMap[y][x];
     }
     
-    public boolean isCellEmpty(int _x, int _y)
+    public boolean isCellEmpty(int x, int y)
     {
-        if(_x < 0 || _y < 0 || _x > msx - 1 || _y > msy - 1) return false;
-        return obstMap[_y][_x] != 'X';
+        if(x < 0 || y < 0 || x > msx - 1 || y > msy - 1) return false;
+        if (obstMap[y][x] == 'T' || obstMap[y][x] == 'M' || obstMap[y][x] == 'X'){
+            System.out.println("Перед героем преграда, туда пойти нельзя");
+            return false;
+        }
+        return true;
+        //return obstMap[y][x] != 'X';
     }
     
-    public void updateMap(int _hx, int _hy) {
+    public void updateMap(int hx, int hy) {
         for (int i = 0; i < msy; i++) {
             for (int j = 0; j < msx; j++) {
                 map[i][j] = "*";
-                if(obstMap[i][j] == 'S') map[i][j] = "S";
-                if(obstMap[i][j] == 'X') map[i][j] = "X";
-                if(obstMap[i][j] == 'Q') map[i][j] = "Q";
+                if(obstMap[i][j] == 'S') map[i][j] = "S";   //магазин
+                if(obstMap[i][j] == 'T') map[i][j] = "T";   //дерево
+                if(obstMap[i][j] == 'M') map[i][j] = "M";   //гора
+                if(obstMap[i][j] == 'Q') map[i][j] = "Q";   //хижина
+                if(obstMap[i][j] == 'X') map[i][j] = "X";   //монстр
             }
         }
-        map[_hy][_hx] = "H";
+        map[hy][hx] = "H";    //герой
     }
 
     public void showMap(Hero mainHero, String time) {
@@ -68,6 +80,10 @@ public class GameMap {
             }
             //выведем легенду и статы
             switch (i){
+                case 0: {
+                    System.out.println("    " + time);
+                    break;
+                }
                 case 1: {
                     System.out.println("    H - ваш герой, S - лавка торговца, Q - хижина провидца");
                     break;
@@ -86,10 +102,6 @@ public class GameMap {
                 }
                 case 5: {
                     System.out.println("    ");
-                    break;
-                }
-                case 0: {
-                    System.out.println("    " + time);
                     break;
                 }
             }

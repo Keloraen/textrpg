@@ -2,7 +2,7 @@ package textRPGAndor;
 
 public class InGameShop {
     
-    public final int ITEMS_COUNT = 10;
+    public final int ITEMS_COUNT = 4;
     private final Item[] itm = new Item[ITEMS_COUNT];
     private final int[] itmCost = new int[ITEMS_COUNT];
     private int goldAmount;
