@@ -2,7 +2,7 @@ package textRPGAndor;
 
 public class InGameShop {
     
-    public final int ITEMS_COUNT = 4;
+    public final int ITEMS_COUNT = 5;
     private final Item[] itm = new Item[ITEMS_COUNT];
     private final int[] itmCost = new int[ITEMS_COUNT];
     private int goldAmount;
@@ -14,9 +14,11 @@ public class InGameShop {
         itm[1] = new Item("Щит доблести", Item.ItemType.Armor);
         itmCost[1] = 2;
         itm[2] = new Item("Железная лопата", Item.ItemType.InfConsumables);
-        itmCost[2] = 5;
-        itm[3] = new Item("Сила (1 ед.)", Item.ItemType.Strength);
+        itmCost[2] = 1;
+        itm[3] = new Item("Шлем", Item.ItemType.Armor);
         itmCost[3] = 2;
+        itm[4] = new Item("Сила (1 ед.)", Item.ItemType.Strength);
+        itmCost[4] = 2;
     }
     
     public void showItems(Hero h){
