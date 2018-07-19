@@ -1,5 +1,5 @@
 package textRPGAndor;
 
 public enum EnumGender {
-    Male, Female, Other
+    Мужчина, Женщина, Прочее
 }

@@ -33,39 +33,43 @@ public final class GameClass {
     public void mainGameLoop()  // Метод, отвечающий за игровую логику
     {
         boolean flag = true;
+        String actionsList;
         //System.out.println("Начинается день " + day + ". Игровой час " + hour);
+        actionsList = makeActionList();
         while (flag) {
-            int x = getAction(0, 7, "Что Вы хотите делать дальше 0.Завершить игру 1.Пойти влево 2."
-                    + "Пойти вправо\n3.Пойти вверх 4.Пойти вниз 5.Найти монстров 6.Открыть инвентарь"
-                    + " 7.Показать инфо");
+/*            int x = getAction(0, 7, "Что Вы хотите делать дальше 0.Завершить игру 1.Пойти влево 2."
+                    + "Пойти вправо\n3.Пойти вверх 4.Пойти вниз 5.Сразиться на арене 6.Открыть инвентарь"
+                    + " 7.Показать инфо");*/
+            actionsList = makeActionList();
+            int x = getAction(0,7,actionsList);
 
             switch (x) {
                 case 0:
                     flag = false;
                     break;
                 case 1:
-                    if (map.isCellEmpty(mainHero.getX() - 1, mainHero.getY())) {
+                    if (map.isCellEmpty(mainHero.getX() - 1, mainHero.getY(),true)) {
                         mainHero.moveHero(-1, 0);
                         time();
                         randomEvents();
                     }
                     break;
                 case 2:
-                    if (map.isCellEmpty(mainHero.getX() + 1, mainHero.getY())) {
+                    if (map.isCellEmpty(mainHero.getX() + 1, mainHero.getY(),true)) {
                         mainHero.moveHero(1, 0);
                         time();
                         randomEvents();
                     }
                     break;
                 case 3:
-                    if (map.isCellEmpty(mainHero.getX(), mainHero.getY() - 1)) {
+                    if (map.isCellEmpty(mainHero.getX(), mainHero.getY() - 1,true)) {
                         mainHero.moveHero(0, -1);
                         time();
                         randomEvents();
                     }
                     break;
                 case 4:
-                    if (map.isCellEmpty(mainHero.getX(), mainHero.getY() + 1)) {
+                    if (map.isCellEmpty(mainHero.getX(), mainHero.getY() + 1,true)) {
                         mainHero.moveHero(0, 1);
                         time();
                         randomEvents();
@@ -95,6 +99,7 @@ public final class GameClass {
                     break;
                 case 7:
                     mainHero.ShowInfo();
+                    System.out.println("Убито монстров: " + mainHero.getKilledMonsterCounter());
                     mainHero.myInv.showAllItems(false);
                     break;
                 default:
@@ -136,6 +141,25 @@ public final class GameClass {
         System.out.println("Игра завершена");
     }
 
+    private String makeActionList() {
+        String actionsList = "";
+        actionsList = "Что Вы хотите делать дальше 0.Завершить игру ";
+        if (map.isCellEmpty(mainHero.getX() - 1, mainHero.getY(), false)){
+            actionsList = actionsList + "1.Пойти влево ";
+        }
+        if (map.isCellEmpty(mainHero.getX() + 1, mainHero.getY(), false)){
+            actionsList = actionsList + "2.Пойти вправо ";
+        }
+        if (map.isCellEmpty(mainHero.getX(), mainHero.getY() - 1, false)){
+            actionsList = actionsList + "3.Пойти вверх ";
+        }
+        if (map.isCellEmpty(mainHero.getX(), mainHero.getY() + 1, false)){
+            actionsList = actionsList + "4.Пойти вниз ";
+        }
+        actionsList += "5.Сразиться на арене 6.Открыть инвентарь 7.Показать инфо";
+        return actionsList;
+    }
+
     public void randomEvents() {
         //случайное событие - нападение монстра
         if (Utils.rand.nextInt(100) < 15) {
@@ -159,11 +183,9 @@ public final class GameClass {
     public void time(){
         if(hour != 7){
             hour++;
-            //System.out.println("Идёт день " + day + ". Игровой час " + hour);
         } else{
             day++;
             hour = 1;
-            //System.out.println("Начинается день " + day);
         }
     }
 
@@ -174,6 +196,7 @@ public final class GameClass {
         currentMonster = m;
         mainHero = h;
         boolean flag = true;
+        System.out.println("На арену выходит " + currentMonster.getName()); // Выводим сообщение о выходе нового врага на поле боя
         do {
             // зануляем переменные
             heroDamage = 0;
@@ -207,7 +230,7 @@ public final class GameClass {
                     //проверка жив ли монстр или герой
                     if (!mainHero.isAlive()) // Если после удара монстра герой погибает - выходим из основного игрового цикла
                     {
-                        System.out.println("Герой " + mainHero.getName() + " проигрывает бой. Сила -1, воля = 3.");
+                        System.out.println("Герой " + mainHero.getName() + " проигрывает бой. Сила уменьшена на 1, воля = 3.");
                         mainHero.defeated();
                         flag = false;
                     }
@@ -217,13 +240,14 @@ public final class GameClass {
                         System.out.println(currentMonster.getName() + " погибает"); // Печатаем сообщение о гибели монстра
                         mainHero.expGain();
                         mainHero.rewardGain(currentMonster.getCharClass());
+                        mainHero.addMonsterCounter();
                         System.out.println("");
                         try {
                             currentMonster = (Monster) monsterPattern[Utils.rand.nextInt(4)].clone(); // Создаем нового монстра случайного типа, копируя из шаблона
                         } catch (CloneNotSupportedException ex) {
                             Logger.getLogger(GameClass.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        System.out.println("На поле боя выходит " + currentMonster.getName()); // Выводим сообщение о выходе нового врага на поле боя
+                        System.out.println("На арену выходит " + currentMonster.getName()); // Выводим сообщение о выходе нового врага на поле боя
                     }
                     currentRound++;
                     break;
@@ -250,14 +274,14 @@ public final class GameClass {
                     } catch (CloneNotSupportedException ex) {
                         Logger.getLogger(GameClass.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    System.out.println("на поле боя выходит " + currentMonster.getName()); // Выводим сообщение о выходе нового врага на поле боя
+                    System.out.println("на арену выходит " + currentMonster.getName()); // Выводим сообщение о выходе нового врага на поле боя
                     currentRound = 1;
                     break;
                 }
                 case 0: {
                     // В зависимости от того, кто остался в живых - выводим итоговое сообщение о результате игры
                     if (currentMonster.isAlive() && mainHero.isAlive()) {
-                        System.out.println(mainHero.getName() + " трусливо сбегает с поля боя");
+                        System.out.println(mainHero.getName() + " трусливо сбегает с арены");
                         flag = false;
                         break; // Выход из боя
                     }
@@ -318,19 +342,19 @@ public final class GameClass {
     {
         // Задаем шаблоны героев и монстров
         //Класс, Имя, Пол, Ранг, Сила, Воля,
-        heroPattern[0] = new Hero(EnumClass.Warrior, "Торн", EnumGender.Male, 14, 1, 7);
-        heroPattern[1] = new Hero(EnumClass.Archer, "Паско", EnumGender.Male, 25, 1, 7);
-        heroPattern[2] = new Hero(EnumClass.Dwarf, "Крам", EnumGender.Male, 7, 1, 7);
-        heroPattern[3] = new Hero(EnumClass.Mage, "Лифардус", EnumGender.Male, 34, 1, 7);
-        heroPattern[4] = new Hero(EnumClass.Warrior, "Майрен", EnumGender.Female, 14, 1, 7);
-        heroPattern[5] = new Hero(EnumClass.Archer, "Чада", EnumGender.Female, 25, 1, 7);
-        heroPattern[6] = new Hero(EnumClass.Dwarf, "Байт", EnumGender.Female, 7, 1, 7);
-        heroPattern[7] = new Hero(EnumClass.Mage, "Эара", EnumGender.Female, 34, 1, 7);
+        heroPattern[0] = new Hero(EnumClass.Воин, "Торн", EnumGender.Мужчина, 14, 1, 7);
+        heroPattern[1] = new Hero(EnumClass.Лучник, "Паско", EnumGender.Мужчина, 25, 1, 7);
+        heroPattern[2] = new Hero(EnumClass.Гном, "Крам", EnumGender.Мужчина, 7, 1, 7);
+        heroPattern[3] = new Hero(EnumClass.Волшебник, "Лифардус", EnumGender.Мужчина, 34, 1, 7);
+        heroPattern[4] = new Hero(EnumClass.Воин, "Майрен", EnumGender.Женщина, 14, 1, 7);
+        heroPattern[5] = new Hero(EnumClass.Лучник, "Чада", EnumGender.Женщина, 25, 1, 7);
+        heroPattern[6] = new Hero(EnumClass.Гном, "Байт", EnumGender.Женщина, 7, 1, 7);
+        heroPattern[7] = new Hero(EnumClass.Волшебник, "Эара", EnumGender.Женщина, 34, 1, 7);
 
-        monsterPattern[0] = new Monster(EnumClass.Gor, "Гор", EnumGender.Male, 0, 2, 4);
-        monsterPattern[1] = new Monster(EnumClass.Skraal, "Скраль", EnumGender.Male, 0, 6, 6);
-        monsterPattern[2] = new Monster(EnumClass.Wardrack, "Вардрак", EnumGender.Male, 0, 12, 7);
-        monsterPattern[3] = new Monster(EnumClass.Troll, "Тролль", EnumGender.Male, 0, 14, 12);
+        monsterPattern[0] = new Monster(EnumClass.Гор, "Гор", EnumGender.Мужчина, 0, 2, 4);
+        monsterPattern[1] = new Monster(EnumClass.Скраль, "Скраль", EnumGender.Мужчина, 0, 6, 6);
+        monsterPattern[2] = new Monster(EnumClass.Вардрак, "Вардрак", EnumGender.Мужчина, 0, 12, 7);
+        monsterPattern[3] = new Monster(EnumClass.Тролль, "Тролль", EnumGender.Мужчина, 0, 14, 12);
 
         currentRound = 1;
     }

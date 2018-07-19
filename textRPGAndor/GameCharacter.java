@@ -52,7 +52,7 @@ public class GameCharacter implements Cloneable {
 
     public void ShowInfo() // Вывод инфо по персонажу
     {
-        System.out.println(charClass + " " + name + " Сила: " + strength + " Воля: " + will);
+        System.out.println(name + " Сила: " + strength + " Воля: " + will);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class GameCharacter implements Cloneable {
         //занулим результаты бросков кубиков и другие перменные
         int currentAttack = 0; //String output = new String(""); 
         switch (_charClass) {
-            case Warrior:
+            case Воин:
                 //0-6 2, 7-13 3, 14-20 4
                 if (_will <= 6) {
                     currentAttack = _strength + throwDices(2);
@@ -83,7 +83,7 @@ public class GameCharacter implements Cloneable {
                     System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
                 }
                 break;
-            case Archer:
+            case Лучник:
                 //0-6 3, 7-13 4, 14-20 5
                 if (_will <= 6) {
                     currentAttack = _strength + throwArcherDices(3);
@@ -96,7 +96,7 @@ public class GameCharacter implements Cloneable {
                     System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
                 }
                 break;
-            case Dwarf:
+            case Гном:
                 //0-6 1, 7-13 2, 14-20 3
                 if (_will <= 6) {
                     currentAttack = _strength + throwDices(1);
@@ -109,7 +109,7 @@ public class GameCharacter implements Cloneable {
                     System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
                 }
                 break;
-            case Mage:
+            case Волшебник:
                 //для него всегда 1 кубик, но можно переворачивать
                 int mageres = throwDices(1);
                 System.out.println(name + " выбрасывает " + mageres + ", итого " + (mageres + _strength));
@@ -122,15 +122,15 @@ public class GameCharacter implements Cloneable {
                 }
                 break;
             //-------------------------АТАКИ МОНСТРОВ----------------------------------
-            case Gor:
+            case Гор:
                 currentAttack = _strength + throwDices(2);
                 System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
                 break;
-            case Skraal:
+            case Скраль:
                 currentAttack = _strength + throwDices(2);
                 System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
                 break;
-            case Wardrack:
+            case Вардрак:
                 if (will <= 6) {
                     currentAttack = _strength + throwBlackDices(1);
                     System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
@@ -139,7 +139,7 @@ public class GameCharacter implements Cloneable {
                     System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
                 }
                 break;
-            case Troll:
+            case Тролль:
                 if (will <= 6) {
                     currentAttack = _strength + throwDices(2);
                     System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
@@ -178,21 +178,23 @@ public class GameCharacter implements Cloneable {
             }
         }
         //проверим пары
-        int doublet = 0;
-        if (arr.length >= 2) {
-            for (int j = 0; j < arr.length; j++) {
-                int tekres = arr[j];
-                for (int k = j + 1; k < arr.length; k++) {
-                    if (tekres == arr[k]) {
-                        System.out.print(" (есть пара!)");
-                        doublet = tekres * 2;
+        if (i>1) {
+            int doublet = 0;
+            if (arr.length >= 2) {
+                for (int j = 0; j < arr.length; j++) {
+                    int tekres = arr[j];
+                    for (int k = j + 1; k < arr.length; k++) {
+                        if (tekres == arr[k]) {
+                            System.out.print(" (есть пара!)");
+                            doublet = tekres * 2;
+                        }
                     }
+                    tekres = arr[j];
                 }
-                tekres = arr[j];
             }
-        }
-        maxres = Math.max(doublet, maxres);
-        System.out.print(", max - " + maxres + ". ");
+            maxres = Math.max(doublet, maxres);
+            System.out.print(", max - " + maxres + ". ");
+        } else System.out.print(" ");
         return maxres;
     }
 

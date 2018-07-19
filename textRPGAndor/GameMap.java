@@ -35,21 +35,20 @@ public class GameMap {
         return obstMap[y][x];
     }
     
-    public boolean isCellEmpty(int x, int y)
+    public boolean isCellEmpty(int x, int y, boolean printWarnings)
     {
         if(x < 0 || y < 0 || x > msx - 1 || y > msy - 1) return false;
         if (obstMap[y][x] == 'T' || obstMap[y][x] == 'M' || obstMap[y][x] == 'X'){
-            System.out.println("Перед героем преграда, туда пойти нельзя");
+            if (printWarnings) System.out.println("Перед героем преграда, туда пойти нельзя");
             return false;
         }
         return true;
-        //return obstMap[y][x] != 'X';
     }
     
     public void updateMap(int hx, int hy) {
         for (int i = 0; i < msy; i++) {
             for (int j = 0; j < msx; j++) {
-                map[i][j] = "*";
+                map[i][j] = ".";
                 if(obstMap[i][j] == 'S') map[i][j] = "S";   //магазин
                 if(obstMap[i][j] == 'T') map[i][j] = "T";   //дерево
                 if(obstMap[i][j] == 'M') map[i][j] = "M";   //гора
@@ -64,16 +63,14 @@ public class GameMap {
         //System.out.println("H - ваш герой, S - лавка торговца, Q - хижина провидца, X - препятствие");
         String will = "";
         for (int i = 0; i < mainHero.getWill(); i++) {
-            will += "[]";
+            will += "{} ";
         }
-        String life = "";
+        String strength = "";
         for (int i = 0; i < mainHero.getStrength(); i++) {
-            life += "[]";
+            strength += "[]";
         }
-        String gold = "";
-        for (int i = 0; i < mainHero.myInv.getGold(); i++) {
-            gold += "O ";
-        }
+        int gold = mainHero.myInv.getGold();
+
         for (int i = 0; i < msy; i++) {
             for (int j = 0; j < msx; j++) {
                 System.out.print(map[i][j] + " ");
@@ -93,7 +90,7 @@ public class GameMap {
                     break;
                 }
                 case 3: {
-                    System.out.println("    " + mainHero.getCharClass() + " " + mainHero.getName() + ": сила " + life + ", воля " + will + ", золото " + gold);
+                    System.out.println("    " + mainHero.getCharClass() + " " + mainHero.getName() + ": сила " + strength + ", воля " + will + ", золото " + gold);
                     break;
                 }
                 case 4: {

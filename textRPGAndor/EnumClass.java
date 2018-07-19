@@ -2,5 +2,5 @@ package textRPGAndor;
 
 public enum EnumClass {
     //"Воин", "Лучник", "Гном", "Маг";
-    Warrior, Archer, Dwarf, Mage, Gor, Skraal, Wardrack, Troll;
+    Воин, Лучник, Гном, Волшебник, Гор, Скраль, Вардрак, Тролль;
 }
