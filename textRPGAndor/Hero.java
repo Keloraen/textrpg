@@ -1,10 +1,10 @@
 package textRPGAndor;
 
 public class Hero extends GameCharacter { // Класс "герой" наследуется от класса "игровой персонаж"
-    private int posX;
-    private int posY;
-    public int lastPosX;
-    public int lastPosY;
+    //private int posX;
+    //private int posY;
+    //public int lastPosX;
+    //public int lastPosY;
     private int killedMonsterCounter;
     private int currentZone;
     public int getX() { return posX; }

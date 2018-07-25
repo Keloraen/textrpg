@@ -1,7 +1,7 @@
 package textRPGAndor;
 
 
-public class Item {
+public class Item extends GameObject{
     
     //конечные, бесконечные, квеcтовые, броня, оружие, сила
     public static enum ItemType { Consumables, InfConsumables, Quest, Armor, Weapon, Strength };

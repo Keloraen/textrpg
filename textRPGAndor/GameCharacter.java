@@ -1,6 +1,6 @@
 package textRPGAndor;
 
-public class GameCharacter implements Cloneable {
+public class GameCharacter extends GameObject {
 
     protected Inventory myInv;
     protected String name;

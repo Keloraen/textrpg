@@ -3,7 +3,7 @@ package textRPGAndor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class GameClass {
+public final class GameClass{
 
     private Hero[] heroPattern = new Hero[8];
     private Monster[] monsterPattern = new Monster[4];
@@ -30,8 +30,10 @@ public final class GameClass {
         map.showMap(mainHero, getTime());     //рисуем карту
     }
 
+
     public void mainGameLoop()  // Метод, отвечающий за игровую логику
     {
+        //-----------------------------------------------------
         boolean flag = true;
         String actionsList;
         //System.out.println("Начинается день " + day + ". Игровой час " + hour);
