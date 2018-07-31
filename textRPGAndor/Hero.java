@@ -7,13 +7,18 @@ public class Hero extends GameCharacter { // Класс "герой" насле�
     //public int lastPosY;
     private int killedMonsterCounter;
     private int currentZone;
+
+    public Hero(EnumClass charClass, String name, EnumGender gender, int rank, int strength, int will) {
+        super(charClass, name, gender, rank, strength, will);
+    }
+
     public int getX() { return posX; }
     public int getY() { return posY; }
     public Inventory myInv = new Inventory();
     
     //Класс, Имя, Пол, Ранг, Сила, Воля, Инвентарь
-    public Hero(EnumClass _charClass, String _name, EnumGender _gender, int _rank, int _strength, int _will) {
-        super(_charClass, _name, _gender, _rank, _strength, _will);
+    public Hero(EnumClass charClass, String name, EnumGender gender, int rank, int strength, int will, Sprite sprite) {
+        super(charClass, name, gender, rank, strength, will, sprite);
         currentZone = 0;
         killedMonsterCounter = 0;
         myInv.add(new Item("Слабый камень здоровья", Item.ItemType.InfConsumables));
@@ -110,7 +115,7 @@ public class Hero extends GameCharacter { // Класс "герой" насле�
             if (!"".equals(_str)) {
                 System.out.println(_str);
             }
-            x = Utils.sc.nextInt();
+            //x = Utils.sc.nextInt();
         } while (x < _min || x > _max);
         return x;
     }

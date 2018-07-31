@@ -100,7 +100,7 @@ public final class GameClass{
                     }
                     break;
                 case 7:
-                    mainHero.ShowInfo();
+                    mainHero.showInfo();
                     System.out.println("Убито монстров: " + mainHero.getKilledMonsterCounter());
                     mainHero.myInv.showAllItems(false);
                     break;
@@ -205,8 +205,8 @@ public final class GameClass{
             monsterDamage = 0;
             // Выводим информацию о текущем раунде, состоянии героя и врага
             System.out.println("\nТекущий раунд: " + currentRound);
-            mainHero.ShowInfo();
-            currentMonster.ShowInfo();
+            mainHero.showInfo();
+            currentMonster.showInfo();
 
             inpInt = getAction(0, 3, "Ход игрока: 0.Завершить бой 1.Атака 2.Открыть инвентарь 3.Сменить монстра");
             System.out.print("\n"); // Печатаем два символа перевода строки
@@ -335,7 +335,7 @@ public final class GameClass{
             if (!"".equals(_str)) {
                 System.out.println(_str);
             }
-            x = Utils.sc.nextInt();
+            //x = Utils.sc.nextInt();
         } while (x < _min || x > _max);
         return x;
     }

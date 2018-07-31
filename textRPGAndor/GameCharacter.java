@@ -2,35 +2,45 @@ package textRPGAndor;
 
 public class GameCharacter extends GameObject {
 
-    protected Inventory myInv;
-    protected String name;
+    private Inventory myInv;
+    private String name;
+
+    //конструктор старой версии
+    public GameCharacter(EnumClass charClass, String name, EnumGender gender, int rank, int strength, int will) {
+        this.charClass = charClass;
+        this.name = name;
+        this.gender = gender;
+        this.rank = rank;
+        this.strength = strength;
+        this.will = will;
+    }
 
     public String getName() {
         return name;
     }
 
-    protected EnumClass charClass;
+    private EnumClass charClass;
 
     public EnumClass getCharClass() {
         return charClass;
     }
 
-    protected EnumGender gender;
+    private EnumGender gender;
 
     public EnumGender getGender() {
         return gender;
     }
-    protected int rank;
+    private int rank;
 
     public int getRank() {
         return rank;
     }
-    protected int strength;
+    public int strength;
 
     public int getStrength() {
         return strength;
     }
-    protected int will;
+    public int will;
 
     public int getWill() {
         return will;
@@ -40,19 +50,25 @@ public class GameCharacter extends GameObject {
         return will >= 1;
     }
 
-    public GameCharacter(EnumClass _charClass, String _name, EnumGender _gender, int _rank, int _strength, int _will) {
+    //конструктор новой версии
+    public GameCharacter(EnumClass charClass, String name, EnumGender gender, int rank, int strength, int will, Sprite sprite) {
         //Класс, Имя, Пол, Ранг, Сила, Воля, Инвентарь
-        charClass = _charClass;
-        name = _name;
-        gender = _gender;
-        rank = _rank;
-        strength = _strength;
-        will = _will;
+        this.charClass = charClass;
+        this.name = name;
+        this.gender = gender;
+        this.rank = rank;
+        this.strength = strength;
+        this.will = will;
+        this.sprite = sprite;
     }
 
-    public void ShowInfo() // Вывод инфо по персонажу
+    public void showInfo() // Вывод инфо по персонажу
     {
         System.out.println(name + " Сила: " + strength + " Воля: " + will);
+    }
+
+    public String showInfoString(){
+        return name + " Сила: " + strength + " Воля: " + will;
     }
 
     @Override
@@ -66,86 +82,86 @@ public class GameCharacter extends GameObject {
         }
     }
 
-    public int makeAttack(int _will, EnumClass _charClass, int _strength) {
+    public int makeAttack(int will, EnumClass charClass, int strength) {
         //занулим результаты бросков кубиков и другие перменные
         int currentAttack = 0; //String output = new String(""); 
-        switch (_charClass) {
+        switch (charClass) {
             case Воин:
                 //0-6 2, 7-13 3, 14-20 4
-                if (_will <= 6) {
-                    currentAttack = _strength + throwDices(2);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
-                } else if ((_will >= 7) && (_will <= 13)) {
-                    currentAttack = _strength + throwDices(3);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
-                } else if ((_will >= 14) && (_will <= 20)) {
-                    currentAttack = _strength + throwDices(4);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                if (will <= 6) {
+                    currentAttack = strength + throwDices(2);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
+                } else if ((will >= 7) && (will <= 13)) {
+                    currentAttack = strength + throwDices(3);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
+                } else if ((will >= 14) && (will <= 20)) {
+                    currentAttack = strength + throwDices(4);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 }
                 break;
             case Лучник:
                 //0-6 3, 7-13 4, 14-20 5
-                if (_will <= 6) {
-                    currentAttack = _strength + throwArcherDices(3);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
-                } else if ((_will >= 7) && (_will <= 13)) {
-                    currentAttack = _strength + throwArcherDices(4);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
-                } else if ((_will >= 14) && (_will <= 20)) {
-                    currentAttack = _strength + throwArcherDices(5);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                if (will <= 6) {
+                    currentAttack = strength + throwArcherDices(3);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
+                } else if ((will >= 7) && (will <= 13)) {
+                    currentAttack = strength + throwArcherDices(4);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
+                } else if ((will >= 14) && (will <= 20)) {
+                    currentAttack = strength + throwArcherDices(5);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 }
                 break;
             case Гном:
                 //0-6 1, 7-13 2, 14-20 3
-                if (_will <= 6) {
-                    currentAttack = _strength + throwDices(1);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
-                } else if ((_will >= 7) && (_will <= 13)) {
-                    currentAttack = _strength + throwDices(2);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
-                } else if ((_will >= 14) && (_will <= 20)) {
-                    currentAttack = _strength + throwDices(3);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                if (will <= 6) {
+                    currentAttack = strength + throwDices(1);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
+                } else if ((will >= 7) && (will <= 13)) {
+                    currentAttack = strength + throwDices(2);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
+                } else if ((will >= 14) && (will <= 20)) {
+                    currentAttack = strength + throwDices(3);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 }
                 break;
             case Волшебник:
                 //для него всегда 1 кубик, но можно переворачивать
                 int mageres = throwDices(1);
-                System.out.println(name + " выбрасывает " + mageres + ", итого " + (mageres + _strength));
+                System.out.println(name + " выбрасывает " + mageres + ", итого " + (mageres + strength));
                 int x = getAction(0, 1, "Перевернуть? 1-Да, 0-Нет");
                 if (x == 1) {
-                    currentAttack = 7 - mageres + _strength;
-                    System.out.println(name + " переворачивает кубик, получая " + (currentAttack - _strength) + ", итого " + currentAttack);
+                    currentAttack = 7 - mageres + strength;
+                    System.out.println(name + " переворачивает кубик, получая " + (currentAttack - strength) + ", итого " + currentAttack);
                 } else {
-                    currentAttack = mageres + _strength;
+                    currentAttack = mageres + strength;
                 }
                 break;
             //-------------------------АТАКИ МОНСТРОВ----------------------------------
             case Гор:
-                currentAttack = _strength + throwDices(2);
-                System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                currentAttack = strength + throwDices(2);
+                System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 break;
             case Скраль:
-                currentAttack = _strength + throwDices(2);
-                System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                currentAttack = strength + throwDices(2);
+                System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 break;
             case Вардрак:
                 if (will <= 6) {
-                    currentAttack = _strength + throwBlackDices(1);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                    currentAttack = strength + throwBlackDices(1);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 } else if (will >= 7) {
-                    currentAttack = _strength + throwBlackDices(2);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                    currentAttack = strength + throwBlackDices(2);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 }
                 break;
             case Тролль:
                 if (will <= 6) {
-                    currentAttack = _strength + throwDices(2);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                    currentAttack = strength + throwDices(2);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 } else {
-                    currentAttack = _strength + throwDices(3);
-                    System.out.println(name + " выбрасывает " + (currentAttack - _strength) + ", итого " + currentAttack);
+                    currentAttack = strength + throwDices(3);
+                    System.out.println(name + " выбрасывает " + (currentAttack - strength) + ", итого " + currentAttack);
                 }
                 break;
             default:
@@ -278,7 +294,7 @@ public class GameCharacter extends GameObject {
             if (!"".equals(_str)) {
                 System.out.println(_str);
             }
-            x = Utils.sc.nextInt();
+            //x = Utils.sc.nextInt();
         } while (x < _min || x > _max);
         return x;
     }

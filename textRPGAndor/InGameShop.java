@@ -1,11 +1,12 @@
 package textRPGAndor;
 
-public class InGameShop {
+public class InGameShop extends MapObject{
     
     public final int ITEMS_COUNT = 5;
-    private final Item[] itm = new Item[ITEMS_COUNT];
-    private final int[] itmCost = new int[ITEMS_COUNT];
-    private int goldAmount;
+    public final Item[] itm = new Item[ITEMS_COUNT];
+    public final int[] itmCost = new int[ITEMS_COUNT];
+    public int goldAmount;
+    public Sprite sprite = getSprite("shop.png");
     
     public InGameShop(){
         goldAmount = 10;

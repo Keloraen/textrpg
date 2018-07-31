@@ -3,16 +3,16 @@ package textRPGAndor;
 //import com.sun.org.glassfish.gmbal.Description;
 
 class Quest {
-    public final String description;
-    public final int monster;
-    public final int count;
-    public final int reward;
+    private final String description;
+    private final int monster;
+    private final int count;
+    private final int reward;
     
-    public Quest(String _description, int _monster, int _count, int _reward){
-        description = _description;
-        monster = _monster;
-        count = _count;
-        reward = _reward;
+    public Quest(String description, int monster, int count, int reward){
+        this.description = description;
+        this.monster = monster;
+        this.count = count;
+        this.reward = reward;
     }
 
     public String getDescription() {

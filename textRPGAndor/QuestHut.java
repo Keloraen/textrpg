@@ -1,8 +1,15 @@
 package textRPGAndor;
 
-public class QuestHut {
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
+public class QuestHut extends MapObject{
     public final int QUEST_COUNT = 3;
     private final Quest[] quests = new Quest[QUEST_COUNT];
+    public Sprite sprite = getSprite("questhut.png");
     
     public QuestHut(){
         quests[0] = new Quest("Убить 2 Горов за 5 монет", 1, 2, 5);
@@ -12,8 +19,8 @@ public class QuestHut {
     
     public void showAvailableQuests(){
         System.out.println("Вы заходите в домик провидца. Он предлагает вам на выбор несколько заданий:");
-        for (int i = 0; i < quests.length; i++) {
-            System.out.println(quests[i].getDescription());
+        for (Quest quest : quests) {
+            System.out.println(quest.getDescription());
 
         }
     }

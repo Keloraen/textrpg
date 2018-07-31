@@ -2,7 +2,13 @@ package textRPGAndor;
 
 public class Monster extends GameCharacter {
     
-    public Monster(EnumClass _charClass, String _name, EnumGender _gender, int _rank, int _strength, int _will){
-        super(_charClass, _name, _gender, _rank, _strength, _will);
+    //конструктор новой версии
+    public Monster(EnumClass charClass, String name, EnumGender gender, int rank, int strength, int will, Sprite sprite){
+        super(charClass, name, gender, rank, strength, will, sprite);
+    }
+
+    //конструктор старой версии
+    public Monster(EnumClass charClass, String name, EnumGender gender, int rank, int strength, int will) {
+        super(charClass, name, gender, rank, strength, will);
     }
 }
